@@ -1,18 +1,18 @@
 {
-  "id": "dev.username.PluginTemplate",
-  "name": "unofficial Plugin Template",
-  "description": "An unofficial replugged plugin template",
+  "id": "dev.penguinspy.PplMoe",
+  "name": "ppl.moe",
+  "description": "BETA; only pronouns for now",
   "author": {
-    "name": "",
-    "discordID": "0",
-    "github": ""
+    "name": "Penguin_Spy",
+    "discordID": "97399302313242624",
+    "github": "Penguin-Spy"
   },
-  "version": "1.0.0",
+  "version": "a2.0.0",
   "updater": {
     "type": "github",
-    "id": ""
+    "id": "penguin-spy/replugged-ppl-moe"
   },
   "license": "MIT",
   "type": "replugged-plugin",
-  "renderer": "src/index.js"
+  "renderer": "src/renderer.js"
 }
