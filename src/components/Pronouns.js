@@ -1,5 +1,5 @@
 const { React, flux: Flux } = replugged.common;
-const pplMoeStore = (await import('./profileStore.js')).default;
+const pplMoeStore = (await import('../profileStore.js')).default;
 
 function Pronouns({ userId, profile }) {
   // only fetch a profile when pronouns for a different user are rendered

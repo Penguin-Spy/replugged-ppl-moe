@@ -68,7 +68,7 @@
   display: inline-block;
 }
 .ppl-moe-pronouns[data-compact="true"] {
-    display: inline;
+  display: inline;
 }
 .ppl-moe-profile-badge {
   vertical-align: top;
