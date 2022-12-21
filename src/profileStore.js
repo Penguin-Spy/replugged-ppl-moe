@@ -1,5 +1,4 @@
-const Flux = replugged.webpack.common.flux;
-const FluxDispatcher = replugged.webpack.common.fluxDispatcher;
+let { flux: Flux, fluxDispatcher: FluxDispatcher } = replugged.common;
 
 // list of loaded profiles
 const profiles = {}

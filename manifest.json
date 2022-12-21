@@ -1,13 +1,13 @@
 {
-  "id": "dev.penguinspy.PplMoe",
+  "id": "dev.penguinspy.ppl-moe",
   "name": "ppl.moe",
-  "description": "BETA; only pronouns for now",
+  "description": "A Replugged plugin that displays a user's ppl.moe profile in the user modal, and the user's pronouns above messages.",
   "author": {
     "name": "Penguin_Spy",
     "discordID": "97399302313242624",
     "github": "Penguin-Spy"
   },
-  "version": "a2.0.0",
+  "version": "2.0.1a",
   "updater": {
     "type": "github",
     "id": "penguin-spy/replugged-ppl-moe"

@@ -1,5 +1,4 @@
-const React = replugged.webpack.common.react;
-const Flux = replugged.webpack.common.flux;
+let { React, flux: Flux } = replugged.common;
 
 const pplMoeStore = (await import('./profileStore.js')).default;
 
