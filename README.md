@@ -1,40 +1,33 @@
-# THIS IS NOT THE OFFICIAL PLUGIN TEMPLATE
-you should [use the real one instead](https://github.com/replugged-org/plugin-template)!!
+> **Note**  
+> this is a port of my powercord-ppl-moe plugin and is still in alpha! here be dragons, etc.  
+> any features that are in ~~strikethrough~~ were in the original but have not been ported yet.
 
----
+# replugged ppl.moe
+![clones](https://img.shields.io/endpoint?url=https://githubstats.penguinspy.repl.co/shields/replugged-ppl-moe) [![Replugged](https://img.shields.io/badge/client-Replugged-7289da?logo=discord&logoColor=fff)](https://replugged.dev/)  
+This is a [replugged](https://replugged.dev/) plugin that ~~displays a user's [ppl.moe](https://ppl.moe/) profile as a new tab in the user's modal~~.  
+It also shows their pronouns next to their name in messages (~~similar to & compatible with the [PronounDB](https://pronoundb.org/) plugin~~).  
+ 
+# Features
+- ~~A new tab in the user modal that displays a user's ppl.moe profile (if they have one)~~
+- ~~A new connection that links to the profile on the ppl.moe website~~
+- Displays a user's pronouns in the message header, ~~just like the [PronounDB plugin](https://github.com/cyyynthia/pronoundb-powercord)~~
+- ~~Automatically hides PronounDB's pronouns if there are ppl.moe ones to show (optional)~~
+- ~~Shows a cute little badge next to a user's name in chat messages if they have a profile~~
+- ~~Optional tab icon (instead of text) for theme consistency~~
 
-This is an unofficial template for [replugged](https://github.com/replugged-org/replugged) plugins,
-**without** Typescript support or linting!  
-it still supports bundling the plugin into an `.asar` and installing it into Replugged automatically when files change.
+# Known Issues
+None, if you encounter any issues *with the features that are curently implemented*, [please open a GitHub issue](https://github.com/Penguin-Spy/replugged-ppl-moe/issues).
 
-this was created for personal use because:
-- i hate the computer telling me what code i can and can't write
-- trying to type a Discord mod is fundamentally flawed and annoying
-- idk it sounded kinda fun
+# Installation
+## Replugged
+todo: github workflow to bundle the plugin & release it.  
+for now just `git clone`, `pnpm i`, `pnpm run update` to install it into the replugged plugin folder (and `git pull` & `pnpm run update` to get new changes)
 
-## Prerequisites
-- NodeJS
-- pnpm: `npm i -g pnpm`
-- [Replugged](https://github.com/replugged-org/replugged#installation)
+## Other client mods
+I may write a version for [Aliucord](https://github.com/Aliucord/Aliucord "A Discord mod for Android") at some point.  
+This plugin will never support BetterDiscord/BandagedDiscord or whatever people are calling it this week. (it's the Minecraft Forge of Discord mods)
 
-## Install
-1. [Create a copy of this template](https://github.com/penguin-spy/replugged-plugin-template/generate)
-2. Clone your new repository and cd into it
-3. Install dependencies: `pnpm i`
-4. Edit the `manifest.json` and change at least the `"id"` to be something different.
-4. Install the plugin into Replugged: `pnpm run update`
-5. Reload Discord to load the plugin
+# Legal
+Licensed under MIT. Copyright (c) 2022 Penguin_Spy
 
-The unmodified plugin will log "Typing prevented" in the console when you start typing in any channel.
-
-## Development
-Official Replugged API docs: https://docs.replugged.dev/modules.html (have fun)  
-
-`pnpm run update` will copy the `manifest.json` and `src/` into the [Replugged plugins folder](https://github.com/replugged-org/replugged#installing-plugins-and-themes).  
-`pnpm run watch` will do this automatically whenever a file changes (you still have to reload Discord)
-
-## Distribution
-`pnpm run bundle` will create an `.asar` of the plugin that's ready for distributing via the [#plugin-links](https://discord.com/channels/1000926524452647132/1053466391874900078) 
-channel, GitHub releases, email, FTP, dial-up modem, or USB drive + carrier pigeon.
-
-github workflow coming soon™
+This plugin is not mantained, endorsed by or in any way affiliated with ppl.moe or amy!  
