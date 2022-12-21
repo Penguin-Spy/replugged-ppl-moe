@@ -1,78 +1,54 @@
-let { flux: Flux, fluxDispatcher: FluxDispatcher } = replugged.common;
+const { flux: Flux, fluxDispatcher: FluxDispatcher } = replugged.common;
 
 // list of loaded profiles
 const profiles = {}
 // profiles[id] == undefined means we don't know if that id has a profile
-//              == false     means we know that id doesn't have a profile
-//              == Object    the object is the user's profile (could be mostly empty &| banned)
+//              == false     means we know that id doesn't have a profile (or is banned)
+//              == Object    the object is the user's profile (could be mostly empty)
 // this allows us to use !profile to check if they have a valid profile,
-// as well as differentiate between unfetched & nonexistent profiles
+// as well as differentiate between unfetched & nonexistent profiles (to know if we need to fetch it)
 
-// list of profiles currently being fetched
-const requestingProfiles = {}
-// requestingProfiles[id] = Promise || undefined || false
+// list of profiles currently being fetched (or previously fetched, but that's irrelevant)
+const requestedProfiles = {}
+// requestingProfiles[id] == boolean
+// this is necessary to prevent duplicate GET requests, as useEffect is only called after every component is rendered
+// if a user has 2 messages that get rendered, both will call useEffect and be rendered, and THEN the "effect" of fetchProfile is called twice
 
 
 class PplMoeStore extends Flux.Store {
 
-  // attempt to get the user's profile, and fetch it if we don't have it yet
-  // this will always return either a profile or a promise that will resolve to a profile (profile may be false indicating one does not exist)
-  getProfile(id) {
-    // if we already have the profile, just return it
-    if(id in profiles) return profiles[id]
-    // if we don't have it but we are already fetching it, return the existing promise
-    else if(id in requestingProfiles) return requestingProfiles[id]
+  // ensure we have the user's profile
+  async fetchProfile(id) {
+    // if we already have the profile or are already fetching it, do nothing
+    if(id in profiles || id in requestedProfiles) return;
 
-    // sets up an asynchronous request for the users profile, and the callbacks to be ran when it returns
-    // the callbacks run the Flux dispatch (todo: why?) and return the processed profile
-    requestingProfiles[id] = fetch(`https://ppl.moe/api/user/discord/${id}`).then(r => r.body).then(profile => {
-      if(profile.banned) profile = false
-
-      FluxDispatcher.dispatch({
-        type: 'PPL_MOE_PROFILE_LOADED',
-        id: id,
-        loadedProfile: profile
+    // otherwise, start an asynchronous request for the users profile
+    requestedProfiles[id] = true;
+    const profile = await fetch(`https://ppl.moe/api/user/discord/${id}`)
+      .then(r => r.json())
+      .catch((err) => {
+        if(err.statusCode != 404) console.warn(`ppl.moe profile fetch for ${id} failed:`, err)
+        return false
       })
-      return profile
 
-    }).catch((reason) => {
-      if(reason.statusCode != 404) {
-        console.warn(`ppl.moe profile fetch for ${id} failed:`, reason)
-      }
+    // postprocess returned profile
+    if(profile.banned) profile = false
 
-      FluxDispatcher.dispatch({
-        type: 'PPL_MOE_PROFILE_LOADED',
-        id: id,
-        loadedProfile: false
-      })
-      return false
+    // store it
+    profiles[id] = profile
 
-    }).finally(() => {
-      requestingProfiles[id] = false
+    // and notify connected components that the profile is available
+    FluxDispatcher.dispatch({
+      type: 'PPL_MOE_PROFILE_LOADED',
+      id: id,
+      loadedProfile: profile
     })
-
-    // return the Promise of that fetch
-    return requestingProfiles[id]
   }
 
   // simply try to get the user's profile, returning nothing if we haven't fetched it yet
-  // this isn't technically a "synchronous" version, it just doesn't touch async stuff
-  getProfileSync(id) {
+  getProfile(id) {
     return profiles[id]
   }
 }
 
-export default new PplMoeStore(FluxDispatcher, {
-  ['PPL_MOE_PROFILE_LOADED']: ({ id, loadedProfile }) => {
-    profiles[id] = loadedProfile
-
-    // this is grotesque, but also it works so :shrug:
-    // when a valid profile is loaded and a user modal with the ppl.moe tab disabled is on screen, the tab is revealed.
-    // this could fail if a modal is shown (with no profile) and then a valid profile is loaded (from chat messages probably),
-    //   but that could only really happen when opening the modal immediatly after switching channels and getting quite (un)lucky
-    /*if(loadedProfile) {
-      const tabBarContainer = document.getElementsByClassName("ppl-moe-disable-tab")[0]
-      if(tabBarContainer) tabBarContainer.classList.remove("ppl-moe-disable-tab")
-    }*/
-  }
-})
+export default new PplMoeStore(FluxDispatcher)
