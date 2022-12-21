@@ -6,7 +6,7 @@ function Pronouns({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.getProfile(userId), [userId])
 
   // profile not loaded or no pronouns set
-  if(!profile || profile.info?.pronouns == "") return React.createElement(React.Fragment, {}, ' • pronouns placeholder')
+  if(!profile || profile.info?.pronouns == "") return React.createElement(React.Fragment, {}, ' • nil')
   return React.createElement(React.Fragment, {}, ' • ', profile.info.pronouns)
 }
 
