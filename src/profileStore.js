@@ -24,7 +24,7 @@ class PplMoeStore extends Flux.Store {
 
     // otherwise, start an asynchronous request for the users profile
     requestedProfiles[id] = true;
-    const profile = await fetch(`https://ppl.moe/api/user/discord/${id}`)
+    let profile = await fetch(`https://ppl.moe/api/user/discord/${id}`)
       .then(r => r.json())
       .catch((err) => {
         if(err.statusCode != 404) console.warn(`ppl.moe profile fetch for ${id} failed:`, err)
@@ -32,7 +32,7 @@ class PplMoeStore extends Flux.Store {
       })
 
     // postprocess returned profile
-    if(profile.banned) profile = false
+    if(profile.banned || profile.error) profile = false
 
     // store it
     profiles[id] = profile

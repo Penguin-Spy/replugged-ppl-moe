@@ -67,7 +67,7 @@
   font-weight: 500;
   cursor: default;
   pointer-events: none;
-  margin-left: .25rem;
+  margin-left: .5rem;
   height: 1.25rem;
   color: var(--text-muted);
   display: inline-block;

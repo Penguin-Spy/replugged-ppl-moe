@@ -6,8 +6,11 @@ function Pronouns({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
   // profile not loaded or no pronouns set
-  if(!profile || profile?.info?.pronouns == "") return React.createElement(React.Fragment, {}, ' • nil')
-  return React.createElement(React.Fragment, {}, ' • ', profile?.info?.pronouns)
+  if(!profile || profile.info?.pronouns == "") return null
+
+  return React.createElement("span", { className: "ppl-moe-pronouns" },
+    React.createElement(React.Fragment, {}, profile.info.pronouns)
+  )
 }
 
 export default Flux.connectStores(

@@ -4,10 +4,6 @@ const PLUGIN_ID = "dev.penguinspy.ppl-moe"
 const inject = new Injector();
 const logger = new Logger("Plugin", PLUGIN_ID);
 
-const classes = {
-  pplMoePronouns: "ppl-moe-pronouns"
-}
-
 // i18n placeholder
 const Messages = {
   TAB: "ppl.moe"
@@ -27,9 +23,10 @@ export async function start() {
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
         //logger.log("MessageHeader", props, res)
 
-        res.props.children.push(React.createElement("span", { className: classes.pplMoePronouns },
+        //todo: don't add them when in a replied message (props.message. is reply or whatever)
+        res.props.children.push(
           React.createElement(Pronouns, { userId: props.message.author.id })
-        ))
+        )
 
         return res
       })
@@ -49,7 +46,7 @@ export async function start() {
         const [, UserProfileTabBar, UserProfileBody] = profileBody ?? []
         //logger.log("UserProfileTabBar", UserProfileTabBar.type)
         //logger.log("UserProfileBody", UserProfileBody.type)
-        logger.log(profileBody)
+        //logger.log(profileBody)
 
         if(!UserProfileTabBar || !UserProfileBody) {
           logger.warn("UserProfileTabBar or UserProfileBody not found! Modal:", UserProfileModal, "TabBar, Body: ", UserProfileTabBar, UserProfileBody);

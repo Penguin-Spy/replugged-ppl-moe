@@ -176,8 +176,8 @@ function Profile({ userId, profile }) {
 
   if(typeof profile === "undefined" || !classes.loaded) {
     return React.createElement(Loading)
-  } else if(profile.error || classes.loaded === -1) {
-    return React.createElement(Error, { message: `Error: ${profile.error}` })
+  } else if(!profile || classes.loaded === -1) {
+    return React.createElement(Error, { message: `No profile` })
   }
 
   return (
