@@ -1,7 +1,7 @@
 /* style the tab content */
-/*.ppl-moe-section-header {
+.ppl-moe-section-header {
   display: flex;
-  padding: 20px 0;
+  padding-top: 16px;
 }
 .ppl-moe-badges {
   text-align: right;
@@ -13,7 +13,7 @@
   grid-template-columns: repeat(3,minmax(0,1fr));
   grid-column-gap: 16px;
   grid-row-gap: 12px;
-  padding: 0 0 20px;
+  padding: 16px 0;
 }
 .ppl-moe-section-info div {
   display: flex;
@@ -43,17 +43,19 @@
 }
 
 .ppl-moe-section-bio {
-  display: grid;
-  grid-template-columns: 2 1;
   border-top: 1px solid var(--background-modifier-accent);
-  padding: 20px 0 0;
+  padding: 16px 0;
 }
 .ppl-moe-section-bio h1 {
   display: flex;
 }
 .ppl-moe-section-bio span {
   white-space: unset;
-}*/
+}
+
+.ppl-moe-section-error {
+  padding: 16px 12px;
+}
 
 
 /* style chat elements */
