@@ -20,19 +20,21 @@ export async function start() {
 
 
   // pronouns in message header
-  /*webpack.waitForModule(webpack.filters.bySource(/.\(.,.\(\)\.timestampVisibleOnHover,.\),.\(.,.\(\)\.timestampInline,.\),/), { raw: true })
-    .then(({ exports: MessageHeader }) => {
-      inject.after(MessageHeader, Object.keys(MessageHeader)[0], ([props], res) => {
-        logger.log("MessageHeader", props, res)
+  webpack.waitForModule(webpack.filters.bySource(/.=.\.renderPopout,.=.\.decorations,/))
+    .then(MessageHeaderUsername => {
+      const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
-        if(props.isEdited) return res
-        else return [res,
-          React.createElement("span", { className: classes.pplMoePronouns },
-            React.createElement(Pronouns, { userId: props.user.id })
-          )
-        ]
+      inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
+        //logger.log("MessageHeader", props, res)
+
+        res.props.children.push(React.createElement("span", { className: classes.pplMoePronouns },
+          React.createElement(Pronouns, { userId: props.message.author.id })
+        ))
+
+        return res
       })
-    })*/
+    })
+
 
   // user profile modal
   webpack.waitForModule(webpack.filters.bySource(/;case (.+\..+\.)USER_INFO_CONNECTIONS:case (.+\..+\.)USER_INFO:default:return\(0,/), { raw: true })
@@ -43,11 +45,11 @@ export async function start() {
         //logger.log("userprofilemodal render", args, res)
 
         // i am filled with so many emotions and all of them are ᴋɪʟʟ
-        const [, UserProfileTabBar, UserProfileBody] = res?.props?.children?.props?.children?.props?.children?.props?.children?.[1]?.props?.children?.[1]?.props?.children ?? []
+        const profileBody = res?.props?.children?.props?.children?.props?.children?.props?.children?.[1]?.props?.children?.[1]?.props?.children
+        const [, UserProfileTabBar, UserProfileBody] = profileBody ?? []
         //logger.log("UserProfileTabBar", UserProfileTabBar.type)
         //logger.log("UserProfileBody", UserProfileBody.type)
-
-        logger.log(res?.props?.children?.props?.children?.props?.children?.props?.children?.[1]?.props?.children?.[1]?.props?.children)
+        logger.log(profileBody)
 
         if(!UserProfileTabBar || !UserProfileBody) {
           logger.warn("UserProfileTabBar or UserProfileBody not found! Modal:", UserProfileModal, "TabBar, Body: ", UserProfileTabBar, UserProfileBody);
@@ -58,7 +60,7 @@ export async function start() {
         }
 
         inject.after(UserProfileTabBar, 'type', ([args], res) => {
-          logger.log("UserProfileTabBar render", args, res)
+          //logger.log("UserProfileTabBar render", args, res)
           const tabs = res?.props?.children?.props?.children;
           const TabBarItem = res?.props?.children?.type?.Item;
           if(tabs) {
@@ -71,7 +73,7 @@ export async function start() {
           return res
         })
         inject.after(UserProfileBody, 'type', ([props], res) => {
-          logger.log("UserProfileBody render", props, res)
+          //logger.log("UserProfileBody render", props, res)
           if(props.selectedSection === "PPL_MOE") {
             return React.createElement(Profile, { userId: props.displayProfile.userId });
           }
@@ -83,8 +85,6 @@ export async function start() {
       })
 
     });
-  // UserProfileTabBar props.children.props.children.props.children.props.children[1].props.children[1].props.children[1].type
-  // UserProfileBody props.children.props.children.props.children.props.children[1].props.children[1].props.children[2].type
 }
 
 export function stop() {

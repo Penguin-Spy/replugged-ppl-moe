@@ -76,8 +76,12 @@ Promise.all([
   })
   .catch(e => {
     console.warn("[ppl-moe] Profile failed to get classes:", e)
+    classes.loaded = -1
   })
 
+
+const LoadingAnimationModule = webpack.getModule(webpack.filters.byProps("WANDERING_CUBES"))
+const LoadingAnimation = Object.values(LoadingAnimationModule).find(e => typeof e === "function")
 
 
 function HeaderBlock(props) {
@@ -154,6 +158,13 @@ function AboutBlock(props) {
   return null
 }
 
+// use (LoadingAnimation, {type:"pulsingEllipsis"}) for the spot where the tab item loads in
+function Loading() {
+  return div({ className: "ppl-moe-section-loading" }, [
+    React.createElement(LoadingAnimation)
+  ])
+}
+
 function Error(props) {
   return div({ className: "ppl-moe-section-error" }, [
     span({ className: classes.userInfoText }, props.message)
@@ -163,10 +174,11 @@ function Error(props) {
 function Profile({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
-  console.log("[ppl-moe] render Profile", userId, profile)
-
-  if(!profile || !classes.loaded) return React.createElement(Error, { message: "Loading profile" })
-  if(profile.error) return React.createElement(Error, { message: `Error: ${profile.error}` })
+  if(typeof profile === "undefined" || !classes.loaded) {
+    return React.createElement(Loading)
+  } else if(profile.error || classes.loaded === -1) {
+    return React.createElement(Error, { message: `Error: ${profile.error}` })
+  }
 
   return (
     div({ className: classes.infoScroller, dir: "ltr", style: { 'overflow': "hidden scroll", 'padding-right': "12px" } }, [

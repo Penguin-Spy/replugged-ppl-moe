@@ -51,4 +51,6 @@ class PplMoeStore extends Flux.Store {
   }
 }
 
-export default new PplMoeStore(FluxDispatcher)
+export default new PplMoeStore(FluxDispatcher, {
+  ['PPL_MOE_PROFILE_LOADED']: () => void 0 // this doesn't need to do anything because i'm not using Flux as intended but idc (this just needs to be callable)
+})
