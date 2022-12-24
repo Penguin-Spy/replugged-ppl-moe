@@ -158,26 +158,17 @@ function AboutBlock(props) {
   return null
 }
 
-// use (LoadingAnimation, {type:"pulsingEllipsis"}) for the spot where the tab item loads in
-function Loading() {
-  return div({ className: "ppl-moe-section-loading" }, [
-    React.createElement(LoadingAnimation)
-  ])
-}
-
-function Error(props) {
-  return div({ className: "ppl-moe-section-error" }, [
-    span({ className: classes.userInfoText }, props.message)
-  ])
-}
 
 function Profile({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
   if(typeof profile === "undefined" || !classes.loaded) {
-    return React.createElement(Loading)
+    return React.createElement(LoadingAnimation, { className: "ppl-moe-section-loading" })
+
   } else if(!profile || classes.loaded === -1) {
-    return React.createElement(Error, { message: `No profile` })
+    return div({ className: "ppl-moe-section-error" }, [
+      span({ className: classes.userInfoText }, `An error occured. <${profile}, ${classes.loaded}>`)
+    ])
   }
 
   return (
@@ -197,9 +188,8 @@ function Profile({ userId, profile }) {
 }
 
 export default Flux.connectStores(
-  [pplMoeStore], // stores to pay attention to
-  // props modifier: called with given props, returns additional props to be provided to the component
+  [pplMoeStore],
   ({ userId }) => ({
-    profile: pplMoeStore.getProfile(userId) // this could also just be in Profile, but it's better style to be here (i think, lol)
+    profile: pplMoeStore.getProfile(userId)
   })
-)(React.memo(Profile)) // call return value of connectStores with the component to attach store & props modifer to
+)(React.memo(Profile))

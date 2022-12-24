@@ -59,7 +59,12 @@
 .ppl-moe-section-error {
   padding: 16px 12px;
 }
-
+.ppl-moe-tabitem-loading {
+  padding-top: 8px;
+}
+.theme-light .ppl-moe-tabitem-loading {
+  --status-grey-100: var(--status-grey-430);
+}
 
 /* style chat elements */
 .ppl-moe-pronouns {
