@@ -22,13 +22,10 @@ export async function start() {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
-        //logger.log("MessageHeader", props, res)
-
-        //todo: don't add them when in a replied message (props.message. is reply or whatever)
+        // this is hidden with css when in a reply or in compact mode (until hovered)
         res.props.children.push(
-          React.createElement(Pronouns, { userId: props.message.author.id })
+          React.createElement(Pronouns, { userId: props.message.author.id, compact: props.compact })
         )
-
         return res
       })
     })

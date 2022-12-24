@@ -1,14 +1,14 @@
 import { React, flux as Flux } from "replugged/common";
 import pplMoeStore from "../profileStore.js";
 
-function Pronouns({ userId, profile }) {
+function Pronouns({ userId, profile, compact }) {
   // only fetch a profile when pronouns for a different user are rendered
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
   // profile not loaded or no pronouns set
   if(!profile || profile.info?.pronouns == "") return null
 
-  return React.createElement("span", { className: "ppl-moe-pronouns" },
+  return React.createElement("span", { className: "ppl-moe-pronouns", "data-compact": compact },
     React.createElement(React.Fragment, {}, profile.info.pronouns)
   )
 }
