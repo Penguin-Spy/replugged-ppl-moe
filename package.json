@@ -1,6 +1,6 @@
 {
   "name": "replugged-ppl-moe",
-  "version": "2.0.6a",
+  "version": "2.0.7a",
   "description": "A Replugged plugin that displays a user's ppl.moe profile in the user modal, and the user's pronouns above messages.",
   "author": "Penguin_Spy",
   "scripts": {
