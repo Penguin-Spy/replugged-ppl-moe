@@ -10,10 +10,6 @@ const PLUGIN_ID = "dev.penguinspy.ppl-moe"
 const inject = new Injector();
 const logger = new Logger("Plugin", PLUGIN_ID);
 
-// i18n placeholder
-const Messages = {
-  TAB: "ppl.moe"
-}
 
 export async function start() {
 

@@ -1,6 +1,7 @@
 import { webpack } from "replugged";
 import { React, flux as Flux } from "replugged/common";
 import pplMoeStore from "../profileStore.js";
+import Messages from "../i18n.js";
 
 function div(...args) {
   if(args[1] === undefined) args = [null, args[0]];
@@ -15,41 +16,6 @@ function h1(...args) {
   return React.createElement("h1", args[0], args[1]);
 }
 
-const Messages = {
-  "PPL_MOE": "ppl.moe",
-  "PPL_MOE_GENDER": "⚧️ Gender",
-  "PPL_MOE_PRONOUNS": "⚧️ Pronouns",
-  "PPL_MOE_LOCATION": "📍 Location",
-  "PPL_MOE_LANGUAGE": "🌎 Language",
-  "PPL_MOE_WEBSITE": "🌐 Website",
-  "PPL_MOE_BIRTHDAY": "🎂 Birthday",
-  "PPL_MOE_ABOUT": "📝 All about {name}",
-  "PPL_MOE_MONTH_01": "Jan.",
-  "PPL_MOE_MONTH_02": "Feb.",
-  "PPL_MOE_MONTH_03": "Mar.",
-  "PPL_MOE_MONTH_04": "Apr.",
-  "PPL_MOE_MONTH_05": "May.",
-  "PPL_MOE_MONTH_06": "Jun.",
-  "PPL_MOE_MONTH_07": "Jul.",
-  "PPL_MOE_MONTH_08": "Aug.",
-  "PPL_MOE_MONTH_09": "Sep.",
-  "PPL_MOE_MONTH_10": "Oct.",
-  "PPL_MOE_MONTH_11": "Nov.",
-  "PPL_MOE_MONTH_12": "Dec.",
-  "PPL_MOE_OPEN_PROFILE": "Open {name}'s profile",
-  "PPL_MOE_SETTINGS_SHOW_PRONOUNS": "Show Pronouns",
-  "PPL_MOE_SETTINGS_SHOW_PRONOUNS_DESCRIPTION": "Show ppl.moe pronouns at the top of the user's message",
-  "PPL_MOE_SETTINGS_HIDE_PRONOUNDB": "Hide PronounDB",
-  "PPL_MOE_SETTINGS_HIDE_PRONOUNDB_DESCRIPTION": "Hide PronounDB's pronouns if there are ppl.moe ones present",
-  "PPL_MOE_SETTINGS_HIDE_PRONOUNDB_DESCRIPTION_INSTALL": "Install PronounDB for this setting to be relevant",
-  "PPL_MOE_SETTINGS_SHOW_PROFILE_BADGE": "Show Profile Badge",
-  "PPL_MOE_SETTINGS_SHOW_PROFILE_BADGE_DESCRIPTION": "Show a ppl.moe badge next to a user's name if they have a ppl.moe profile. This will display independently of pronouns.",
-  "PPL_MOE_SETTINGS_USER_MODAL_ICON": "User Modal Icon",
-  "PPL_MOE_SETTINGS_USER_MODAL_ICON_DESCRIPTION": "Display an icon instead of text for the User Modal tab.",
-  "PPL_MOE_CONNECTION_DISCONNECT_CONTENT": "You cannot disconnect your ppl.moe profile from your Discord account.",
-  "PPL_MOE_CONNECTION_VISIBILITY_CONTENT": "Profile visibility cannot be changed in Discord.",
-  "PPL_MOE_CONNECTION_OK": "Ok"
-}
 
 const classes = {}
 function waitForByProps(...args) {
@@ -99,63 +65,61 @@ function HeaderBlock(props) {
 
 function InfoBlock(props) {
   const { info, keyName: key } = props
-  if(info[key] != "") { // If this field isn't empty
-    let text
+  if(info[key] === "") return null // if this field is empty, specifically return null (otherwise react crashes)
 
-    switch(key) {
-      case 'website': // If it's the website, make it a link to the text
-        text = React.createElement("a", { className: "ppl-moe-link", href: info[key], target: "_blank" },
-          info[key]
-        )
-        break
-      case 'birthday':
-        let birthday = info[key].split("-")
-        text = Messages[`PPL_MOE_MONTH_${birthday[0]}`] + " " + birthday[1]
-        break
-      default:
-        text = info[key]
-    }
-
-    return div([
-      h1({ className: classes.userInfoSectionHeader },
-        Messages[`PPL_MOE_${key.toUpperCase()}`]
-      ),
-      span(text),
-    ])
-
+  let text
+  switch(key) {
+    case 'website': // If it's the website, make it a link to the text
+      text = React.createElement("a", { className: "ppl-moe-link", href: info[key], target: "_blank" },
+        info[key]
+      )
+      break
+    case 'birthday':
+      let birthday = info[key].split("-")
+      text = Messages[`PPL_MOE_MONTH_${birthday[0]}`] + " " + birthday[1]
+      break
+    default:
+      text = info[key]
   }
-  return null // if this field is empty, specifically return null (otherwise react crashes)
+
+  return div([
+    h1({ className: classes.userInfoSectionHeader },
+      Messages[`PPL_MOE_${key.toUpperCase()}`]
+    ),
+    span(text),
+  ])
+
+
 }
 
 function AboutBlock(props) {
   const { bioMarkdown, name } = props
-  if(bioMarkdown != "") { // If a bio has been written
-    const bioHTML = bioMarkdown
-      .replace(/"/gim, "&quot;")  // Sanitize HTML stuff (so you can't put XSS in your bio :P
-      .replace(/'/gim, "&apos;")
-      .replace(/</gim, "&lt;")
-      .replace(/>/gim, "&gt;")
-      .replace(/^### (.*$)/gim, "<h3>$1</h3>")  // Format markdown (incomplete, does not include: tables, using underscores, strikethrough, seperators, code & codeblocks, lists, & more!)
-      .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-      .replace(/^# (.*$)/gim, "<h1>$1</h1>")
-      .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>")
-      .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
-      .replace(/\*(.*?)\*/gim, "<i>$1</i>")
-      .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
-      .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' target='_blank' class='ppl-moe-link'>$1</a>")
-      .replace(/  $/gim, "<br>")  // double space at end of lines is line break
-      .replace(/\\\n/gim, "<br>") // "\⤶" is line break
-      .replace(/\r\n\r\n/gim, "<br><br>") // double carridge return-line feed is paragraph break
-      .replace(/(^|[^\n])\n{2}(?!\n)/g, "$1<br><br>") // double newline, no spaces is paragraph break, RegEx magic: https://stackoverflow.com/questions/18011260/regex-to-match-single-new-line-regex-to-match-double-new-line#answer-18012521
+  if(bioMarkdown === "") return null
 
-    return div({ className: "ppl-moe-section-bio" }, [
-      h1({ className: classes.userInfoSectionHeader },
-        Messages.PPL_MOE_ABOUT.replace("{name}", name)
-      ),
-      span({ className: classes.userInfoText, dangerouslySetInnerHTML: { __html: bioHTML } }, null),
-    ])
-  }
-  return null
+  const bioHTML = bioMarkdown
+    .replace(/"/gim, "&quot;")  // Sanitize HTML stuff (so you can't put XSS in your bio :P
+    .replace(/'/gim, "&apos;")
+    .replace(/</gim, "&lt;")
+    .replace(/>/gim, "&gt;")
+    .replace(/^### (.*$)/gim, "<h3>$1</h3>")  // Format markdown (incomplete, does not include: tables, using underscores, strikethrough, seperators, code & codeblocks, lists, & more!)
+    .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+    .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+    .replace(/^\> (.*$)/gim, "<blockquote>$1</blockquote>")
+    .replace(/\*\*(.*?)\*\*/gim, "<b>$1</b>")
+    .replace(/\*(.*?)\*/gim, "<i>$1</i>")
+    .replace(/!\[(.*?)\]\((.*?)\)/gim, "<img alt='$1' src='$2' />")
+    .replace(/\[(.*?)\]\((.*?)\)/gim, "<a href='$2' target='_blank' class='ppl-moe-link'>$1</a>")
+    .replace(/  $/gim, "<br>")  // double space at end of lines is line break
+    .replace(/\\\n/gim, "<br>") // "\⤶" is line break
+    .replace(/\r\n\r\n/gim, "<br><br>") // double carridge return-line feed is paragraph break
+    .replace(/(^|[^\n])\n{2}(?!\n)/g, "$1<br><br>") // double newline, no spaces is paragraph break, RegEx magic: https://stackoverflow.com/questions/18011260/regex-to-match-single-new-line-regex-to-match-double-new-line#answer-18012521
+
+  return div({ className: "ppl-moe-section-bio" }, [
+    h1({ className: classes.userInfoSectionHeader },
+      Messages.PPL_MOE_ABOUT.replace("{name}", name)
+    ),
+    span({ className: classes.userInfoText, dangerouslySetInnerHTML: { __html: bioHTML } }, null),
+  ])
 }
 
 
