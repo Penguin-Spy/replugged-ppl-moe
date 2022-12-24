@@ -1,6 +1,6 @@
-const { React, flux: Flux } = replugged.common;
-const pplMoeStore = (await import('../profileStore.js')).default;
-const { webpack } = replugged;
+import { webpack } from "replugged";
+import { React, flux as Flux } from "replugged/common";
+import pplMoeStore from "../profileStore.js";
 
 function div(...args) {
   if(args[1] === undefined) args = [null, args[0]];

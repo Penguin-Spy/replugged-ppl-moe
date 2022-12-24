@@ -1,4 +1,9 @@
-const { Injector, webpack, Logger } = replugged;
+import { Injector, webpack, Logger } from "replugged";
+import { React } from "replugged/common";
+
+import Pronouns from "./components/Pronouns.js";
+import Profile from "./components/Profile.js";
+import "./style.css"
 
 const PLUGIN_ID = "dev.penguinspy.ppl-moe"
 const inject = new Injector();
@@ -10,10 +15,6 @@ const Messages = {
 }
 
 export async function start() {
-  const React = replugged.common.React;
-  const Pronouns = (await import("./components/Pronouns.js")).default;
-  const Profile = (await import("./components/Profile.js")).default;
-
 
   // pronouns in message header
   webpack.waitForModule(webpack.filters.bySource(/.=.\.renderPopout,.=.\.decorations,/))

@@ -1,4 +1,4 @@
-const { flux: Flux, fluxDispatcher: FluxDispatcher } = replugged.common;
+import { flux as Flux, fluxDispatcher as FluxDispatcher } from "replugged/common";
 
 // list of loaded profiles
 const profiles = {}
