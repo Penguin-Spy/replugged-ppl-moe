@@ -28,7 +28,7 @@ class PplMoeStore extends Flux.Store {
       .then(r => r.json())
       .catch((err) => {
         if(err.statusCode != 404) console.warn(`ppl.moe profile fetch for ${id} failed:`, err)
-        return false
+        return // won't re-request, & stores undefined instead of false (will cause perpetual loading animation)
       })
 
     // postprocess returned profile
@@ -48,6 +48,11 @@ class PplMoeStore extends Flux.Store {
   // simply try to get the user's profile, returning nothing if we haven't fetched it yet
   getProfile(id) {
     return profiles[id]
+  }
+
+  // thing for Discord's devtools (ctrl+alt+O)
+  __getLocalVars() {
+    return { profiles, requestedProfiles }
   }
 }
 
