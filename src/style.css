@@ -66,27 +66,6 @@
   --status-grey-100: var(--status-grey-430);
 }
 
-/* style chat elements */
-.ppl-moe-pronouns {
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: default;
-  pointer-events: none;
-  margin-left: .5rem;
-  height: 1.25rem;
-  color: var(--text-muted);
-  display: inline-block;
-}
-.ppl-moe-pronouns[data-compact="true"] {
-  display: inline;
-}
-/* funny css because the JS doesn't have enough info to determine this */
-div[id^="message-reply-context"] > .ppl-moe-pronouns { display: none; }
-/* todo: this could be a setting tbh (default to only when compact) */
-span[id^="message-username-"]:not(:hover) > .ppl-moe-pronouns[data-compact="true"] {
-  display: none;
-}
-
 /*.ppl-moe-profile-badge {
   vertical-align: top;
   margin-left: .25rem;
@@ -94,10 +73,6 @@ span[id^="message-username-"]:not(:hover) > .ppl-moe-pronouns[data-compact="true
   top: 1px;
 }*/
 
-/* Hide pronoundb pronouns if after the ppl.moe ones */
-/*.ppl-moe-pronouns-hide-pronoundb:not(:empty) ~ .pronoundb-pronouns {
-  display: none;
-}*/
 
 /* ppl.moe tab icon */
 /*.ppl-moe-tab-icon {

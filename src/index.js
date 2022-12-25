@@ -1,4 +1,4 @@
-import { Injector, webpack, Logger } from "replugged";
+import { Injector, webpack, Logger, settings as SettingsManager } from "replugged";
 import { React } from "replugged/common";
 
 import Pronouns from "./components/Pronouns.js";
@@ -9,6 +9,7 @@ import "./style.css"
 const PLUGIN_ID = "dev.penguinspy.ppl-moe"
 const inject = new Injector();
 const logger = new Logger("Plugin", PLUGIN_ID);
+const settings = await SettingsManager.init(PLUGIN_ID)
 
 
 export async function start() {
@@ -19,10 +20,19 @@ export async function start() {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
+        const pronounDBCompat = settings.get("pronoundb-compat", "ppl-moe")
+        const headerItems = res.props.children
+
         // this is hidden with css when in a reply or in compact mode (until hovered)
-        res.props.children.push(
-          React.createElement(Pronouns, { userId: props.message.author.id, compact: props.compact })
-        )
+        const pronouns = React.createElement(Pronouns, { userId: props.message.author.id, compact: props.compact, pronounDBCompat })
+
+        // Attempt to put our span before PronounDB's (so that the CSS can apply)
+        const insertIndex = headerItems.findIndex(e => e?.props?.userId)
+        if(insertIndex >= 0 && pronounDBCompat !== "pronoundb") {
+          headerItems.splice(insertIndex, 0, pronouns)
+        } else { // If it fails, just shove it on the end and call it a day, who knows what the array looks like.
+          headerItems.push(pronouns)
+        }
         return res
       })
     })
