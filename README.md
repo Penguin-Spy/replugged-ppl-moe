@@ -30,7 +30,8 @@ PplMoeSettings.set("pronoundb-compat", "both")      // Show both if both are fou
 ```
 
 # Known Issues
-None, if you encounter any issues *with the features that are curently implemented*, [please open a GitHub issue](https://github.com/Penguin-Spy/replugged-ppl-moe/issues).
+The first time you open a user modal after reloading, the tab button will not appear. Simply re-open the modal to fix this.  
+If you encounter any issues *with the features that are curently implemented*, [please open a GitHub issue](https://github.com/Penguin-Spy/replugged-ppl-moe/issues).
 
 # Installation
 ## Replugged
