@@ -1,15 +1,19 @@
 import { Injector, webpack, Logger, settings as SettingsManager } from "replugged";
 import { React } from "replugged/common";
+import { DefaultSettings } from "./constants.js";
 
-import Pronouns from "./components/Pronouns.js";
-import Profile from "./components/Profile.js";
+import Pronouns from "./components/Pronouns.jsx";
+import Profile from "./components/Profile.jsx";
 import TabBarItem from "./components/TabBarItem.js";
 import "./style.css"
+
+import { Settings } from "./components/Settings.jsx";
+export { Settings }
 
 const PLUGIN_ID = "dev.penguinspy.ppl-moe"
 const inject = new Injector();
 const logger = new Logger("Plugin", PLUGIN_ID);
-const settings = await SettingsManager.init(PLUGIN_ID)
+const settings = await SettingsManager.init(PLUGIN_ID, DefaultSettings)
 
 
 export async function start() {
@@ -20,7 +24,7 @@ export async function start() {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
-        const pronounDBCompat = settings.get("pronoundb-compat", "ppl-moe")
+        const pronounDBCompat = settings.get("pronoundb-compat")
         const headerItems = res.props.children
 
         // this is hidden with css when in a reply or in compact mode (until hovered)

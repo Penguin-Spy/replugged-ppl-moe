@@ -1,4 +1,4 @@
-export default {
+const Messages = Object.freeze({
   "PPL_MOE_TAB": "ppl.moe",
   "PPL_MOE_GENDER": "⚧️ Gender",
   "PPL_MOE_PRONOUNS": "⚧️ Pronouns",
@@ -18,5 +18,10 @@ export default {
   "PPL_MOE_MONTH_09": "Sep.",
   "PPL_MOE_MONTH_10": "Oct.",
   "PPL_MOE_MONTH_11": "Nov.",
-  "PPL_MOE_MONTH_12": "Dec."
-}
+  "PPL_MOE_MONTH_12": "Dec.",
+  "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_TITLE": "PronounDB compat",
+  "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_ENABLED": "Which pronouns to show when a user has both a ppl.moe profile and a PronounDB account.",
+  "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_DISABLED": "Enable PronounDB for this setting to be relevant."
+})
+
+export default Messages

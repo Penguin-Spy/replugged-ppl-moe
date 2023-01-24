@@ -27,7 +27,7 @@ class PplMoeStore extends Flux.Store {
     let profile = await fetch(`https://ppl.moe/api/user/discord/${id}`)
       .then(r => r.json())
       .catch((err) => {
-        if(err.statusCode != 404) console.warn(`ppl.moe profile fetch for ${id} failed:`, err)
+        if(err.statusCode != 404) logger.warn(`ppl.moe profile fetch for ${id} failed:`, err)
         return // won't re-request, & stores undefined instead of false (will cause perpetual loading animation)
       })
 

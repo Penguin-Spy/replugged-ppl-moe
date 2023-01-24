@@ -3,20 +3,6 @@ import { React, flux as Flux } from "replugged/common";
 import pplMoeStore from "../profileStore.js";
 import Messages from "../i18n.js";
 
-function div(...args) {
-  if(args[1] === undefined) args = [null, args[0]];
-  return React.createElement("div", args[0], args[1]);
-}
-function span(...args) {
-  if(args[1] === undefined) args = [null, args[0]];
-  return React.createElement("span", args[0], args[1]);
-}
-function h1(...args) {
-  if(args[1] === undefined) args = [null, args[0]];
-  return React.createElement("h1", args[0], args[1]);
-}
-
-
 const classes = {}
 function waitForByProps(...args) {
   return webpack.waitForModule(webpack.filters.byProps(...args))
@@ -41,7 +27,7 @@ Promise.all([
     classes.loaded = true // if all above succeded, allow rendering of the profile
   })
   .catch(e => {
-    console.warn("[ppl-moe] Profile failed to get classes:", e)
+    logger.warn("Profile failed to get classes:", e)
     classes.loaded = -1
   })
 
@@ -51,16 +37,17 @@ const LoadingAnimation = Object.values(LoadingAnimationModule).find(e => typeof 
 
 
 function HeaderBlock(props) {
-  const { tagline, badges } = props
+  const { tagline, badges } = props.profile
   let badgesString = ""
   if(badges.includes("admin")) badgesString += " ⭐"
   if(badges.includes("bug_hunter")) badgesString += " 🐛"
   if(badges.includes("indev")) badgesString += " ⚒️"
 
-  return div({ className: "ppl-moe-section-header" }, [
-    span(tagline),
-    div({ className: "ppl-moe-badges" }, badgesString)
-  ])
+  return (<div className="ppl-moe-section-header">
+    <span>{tagline}</span>
+    <div className="ppl-moe-badges">{badgesString}</div>
+  </div>
+  )
 }
 
 function InfoBlock(props) {
@@ -70,9 +57,9 @@ function InfoBlock(props) {
   let text
   switch(key) {
     case 'website': // If it's the website, make it a link to the text
-      text = React.createElement("a", { className: "ppl-moe-link", href: info[key], target: "_blank" },
-        info[key]
-      )
+      text = (<a className="ppl-moe-link" href={info[key]} target="_blank">
+        {info[key]}
+      </a>)
       break
     case 'birthday':
       let birthday = info[key].split("-")
@@ -82,14 +69,11 @@ function InfoBlock(props) {
       text = info[key]
   }
 
-  return div([
-    h1({ className: classes.userInfoSectionHeader },
-      Messages[`PPL_MOE_${key.toUpperCase()}`]
-    ),
-    span(text),
-  ])
-
-
+  const header = Messages[`PPL_MOE_${key.toUpperCase()}`]
+  return (<div>
+    <h1 className={classes.userInfoSectionHeader}>{header}</h1>
+    <span>{text}</span>
+  </div>)
 }
 
 function AboutBlock(props) {
@@ -114,12 +98,11 @@ function AboutBlock(props) {
     .replace(/\r\n\r\n/gim, "<br><br>") // double carridge return-line feed is paragraph break
     .replace(/(^|[^\n])\n{2}(?!\n)/g, "$1<br><br>") // double newline, no spaces is paragraph break, RegEx magic: https://stackoverflow.com/questions/18011260/regex-to-match-single-new-line-regex-to-match-double-new-line#answer-18012521
 
-  return div({ className: "ppl-moe-section-bio" }, [
-    h1({ className: classes.userInfoSectionHeader },
-      Messages.PPL_MOE_ABOUT.replace("{name}", name)
-    ),
-    span({ className: classes.userInfoText, dangerouslySetInnerHTML: { __html: bioHTML } }, null),
-  ])
+  const header = Messages.PPL_MOE_ABOUT.replace("{name}", name)
+  return (<div className="ppl-moe-section-bio">
+    <h1 className={classes.userInfoSectionHeader}>{header}</h1>
+    <span className={classes.userInfoText} dangerouslySetInnerHTML={{ __html: bioHTML }} />
+  </div>)
 }
 
 
@@ -127,27 +110,27 @@ function Profile({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
   if(typeof profile === "undefined" || !classes.loaded) {
-    return React.createElement(LoadingAnimation, { className: "ppl-moe-section-loading" })
+    return (<LoadingAnimation className="ppl-moe-section-loading" />)
 
   } else if(!profile || classes.loaded === -1) {
-    return div({ className: "ppl-moe-section-error" }, [
-      span({ className: classes.userInfoText }, `An error occured. <${profile}, ${classes.loaded}>`)
-    ])
+    return (<div className="ppl-moe-section-error" >
+      <span className={classes.userInfoText}>An error occured. {profile}, {classes.loaded}</span>
+    </div>)
   }
 
   return (
-    div({ className: classes.infoScroller, dir: "ltr", style: { 'overflow': "hidden scroll", 'padding-right': "12px" } }, [
-      HeaderBlock({ tagline: profile.tagline, badges: profile.badges }),
-      div({ className: "ppl-moe-section-info" }, [
-        InfoBlock({ info: profile.info, keyName: 'gender' }),
-        InfoBlock({ info: profile.info, keyName: 'pronouns' }),
-        InfoBlock({ info: profile.info, keyName: 'location' }),
-        InfoBlock({ info: profile.info, keyName: 'language' }),
-        InfoBlock({ info: profile.info, keyName: 'website' }),
-        InfoBlock({ info: profile.info, keyName: 'birthday' }),
-      ]),
-      AboutBlock({ bioMarkdown: profile.bio, name: profile.name })
-    ])
+    <div className={classes.infoScroller} dir="ltr" style={{ 'overflow': "hidden scroll", 'padding-right': "12px" }}>
+      <HeaderBlock profile={profile} />
+      <div className="ppl-moe-section-info">
+        <InfoBlock info={profile.info} keyName='gender' />
+        <InfoBlock info={profile.info} keyName='pronouns' />
+        <InfoBlock info={profile.info} keyName='location' />
+        <InfoBlock info={profile.info} keyName='language' />
+        <InfoBlock info={profile.info} keyName='website' />
+        <InfoBlock info={profile.info} keyName='birthday' />
+      </div>
+      <AboutBlock bioMarkdown={profile.bio} name={profile.name} />
+    </div>
   )
 }
 

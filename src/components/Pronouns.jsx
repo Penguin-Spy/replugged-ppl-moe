@@ -9,8 +9,12 @@ function Pronouns({ userId, profile, compact, pronounDBCompat }) {
   // profile not loaded or no pronouns set
   if(!profile || profile.info?.pronouns == "") return null
 
-  return React.createElement("span", { className: "ppl-moe-pronouns", "data-compact": compact, "data-pronoundb-compat": pronounDBCompat },
-    React.createElement(React.Fragment, {}, profile.info.pronouns)
+  return (
+    <span className="ppl-moe-pronouns"
+      data-compact={compact}
+      data-pronoundb-compat={pronounDBCompat}>
+      {profile.info.pronouns}
+    </span>
   )
 }
 
