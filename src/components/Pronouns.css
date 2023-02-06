@@ -26,7 +26,10 @@ span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns::a
 }
 
 /* hide pronouns in reply previews (funny css because the JS doesn't have enough info to determine this) */
-div[id^="message-reply-context"] > .ppl-moe-pronouns { display: none; }
+div:is(
+  [id^="message-reply-context"],
+  [class*="threadMessageAccessory-"]
+) > .ppl-moe-pronouns { display: none; }
 
 /* hide pronouns in compact mode until hovered */
 span[id^="message-username-"]:not(:hover) > .ppl-moe-pronouns[data-compact="true"] {
