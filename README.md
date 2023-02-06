@@ -3,7 +3,7 @@
 > any features that are in ~~strikethrough~~ were in the original but have not been ported yet.
 
 # replugged ppl.moe
-[![downloads](https://img.shields.io/github/downloads/Penguin-Spy/replugged-ppl-moe/latest/total?color=ff69b4&logo=github)](https://github.com/Penguin-Spy/replugged-ppl-moe/releases/latest/download/dev.penguinspy.ppl-moe.asar) [![Replugged](https://img.shields.io/badge/client-Replugged-7289da?logo=discord&logoColor=fff)](https://replugged.dev/)  
+![downloads](https://img.shields.io/github/downloads/Penguin-Spy/replugged-ppl-moe/latest/total?color=ff69b4&logo=github) [![Install for Replugged](https://img.shields.io/badge/Replugged-Install-7289da?logo=discord&logoColor=fff)](https://replugged.dev/install?source=github&identifier=Penguin-Spy/replugged-ppl-moe)  
 This is a [Replugged](https://replugged.dev/) plugin that displays a user's [ppl.moe](https://ppl.moe/) profile as a new tab in the user's modal.  
 It also shows users' pronouns next to the username in messages.  
 
@@ -22,7 +22,7 @@ If you encounter any issues *with the features that are curently implemented*, [
 
 # Installation
 ## Replugged
-[Download the latest .asar](https://github.com/Penguin-Spy/replugged-ppl-moe/releases/latest/download/dev.penguinspy.ppl-moe.asar) and copy it to [your plugins folder](https://github.com/replugged-org/replugged#installing-plugins-and-themes).
+Click [here](https://replugged.dev/install?source=github&identifier=Penguin-Spy/replugged-ppl-moe) to install the latest version.
 
 ## Other client mods
 I may write a version for [Aliucord](https://github.com/Aliucord/Aliucord "A Discord mod for Android") at some point.  
