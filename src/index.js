@@ -24,14 +24,14 @@ export async function start() {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
-        const pronounDBCompat = settings.get("pronoundb-compat")
+        const pronounDBCompat = settings.get("pronoundb_compat")
         const headerItems = res.props.children
 
         // this is hidden with css when in a reply or in compact mode (until hovered)
         const pronouns = React.createElement(Pronouns, { userId: props.message.author.id, compact: props.compact, pronounDBCompat })
 
         // Attempt to put our span before PronounDB's (so that the CSS can apply)
-        const insertIndex = headerItems.findIndex(e => e?.props?.userId)
+        const insertIndex = headerItems.findIndex(e => e?.props?.pronounDB)
         if(insertIndex >= 0 && pronounDBCompat !== "pronoundb") {
           headerItems.splice(insertIndex, 0, pronouns)
         } else { // If it fails, just shove it on the end and call it a day, who knows what the array looks like.
