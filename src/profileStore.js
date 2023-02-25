@@ -25,10 +25,16 @@ class PplMoeStore extends Flux.Store {
     // otherwise, start an asynchronous request for the users profile
     requestedProfiles[id] = true;
     let profile = await fetch(`https://ppl.moe/api/user/discord/${id}`)
-      .then(r => r.json())
-      .catch((err) => {
-        if(err.statusCode != 404) logger.warn(`ppl.moe profile fetch for ${id} failed:`, err)
-        return // won't re-request, & stores undefined instead of false (will cause perpetual loading animation)
+      .then(res => {
+        if(!res.ok) {
+          if(res.status !== 404) logger.warn(`profile fetch for ${id} failed:`, res.text())
+          return false // won't re-request, & stores undefined instead of false (will cause perpetual loading animation)
+        }
+        return res.json()
+      })
+      .catch(err => {
+        logger.warn("parsing response failed:", err)
+        return false // if json parsing fails for some reason, don't crash
       })
 
     // postprocess returned profile
