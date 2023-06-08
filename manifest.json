@@ -7,7 +7,7 @@
     "discordID": "97399302313242624",
     "github": "Penguin-Spy"
   },
-  "version": "2.2.0",
+  "version": "2.2.1",
   "updater": {
     "type": "github",
     "id": "penguin-spy/replugged-ppl-moe"

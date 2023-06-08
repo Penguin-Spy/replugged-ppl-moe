@@ -11,20 +11,16 @@ const action = (profile) => {
 export default function UserContextItem(userId) {
   pplMoeStore.fetchProfile(userId) // can't use React.useEffect because, uh, discord gets mad or something
 
-  logger.log("item render", userId)
   const profile = pplMoeStore.getProfile(userId)
 
   if(profile) {
-    logger.log("profile: ", profile)
     return (
       <MenuItem id="ppl-moe" label={"View " + profile.name + "'s profile"} action={() => action(profile)} />
     )
   } else if(profile === undefined) {
-    logger.log("profile undefined ", profile)
     return (
-      <MenuItem id="ppl-moe" label={`ppl.moe profile not loaded`} />
+      <MenuItem id="ppl-moe" label={`ppl.moe profile loading`} />
     )
   }
-  logger.log("profile false: ", profile)
   return false
 }
