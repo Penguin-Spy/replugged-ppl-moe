@@ -66,6 +66,24 @@
   --status-grey-100: var(--status-grey-430);
 }
 
+div[id^="user-context-ppl-moe-"]::after {
+  content: "";
+  position: relative;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  height: 18px;
+  width: 18px;
+  margin-left: 8px;
+  --icon-mask: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADvSURBVDhP7dKxrgFBGIbhRURFRCKqU6l1BJ3KBWgUau25lFOfC6BUqXUSicoVEBGlSCgkCN5vxmyGTYTelzzZmdn/z87ObvDNNzYFJOzwrahWPZEMMULTzF5HNapVTyS6ccUJ//hBBW100EARuqca1aonkj5009ng6M0v2HlzUY9J/H5VpverSw5JOzSJIW2HYZ57TEo4wH/iK2fUYOLvSO+fssNgjy7WZmazxB/0ioq+WssOHzOAe9oCWUy8tR7y2Hprc2QQRuexgivQtmfwD1uHP4Z25Nb09aoIU4eaXcEnfhGeURmf/NV+OPAguAHSRlOBlut+qgAAAABJRU5ErkJggg==);
+  mask: var(--icon-mask) center/contain no-repeat;
+  -webkit-mask: var(--icon-mask) center/contain no-repeat;
+  background: white;
+}
+
+
+
+
 /*.ppl-moe-profile-badge {
   vertical-align: top;
   margin-left: .25rem;

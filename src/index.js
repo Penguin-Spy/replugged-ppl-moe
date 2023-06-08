@@ -1,10 +1,11 @@
-import { Injector, webpack, Logger, settings as SettingsManager } from "replugged";
+import { Injector, webpack, Logger, settings as SettingsManager, types } from "replugged";
 import { React } from "replugged/common";
 import { DefaultSettings } from "./constants.js";
 
 import Pronouns from "./components/Pronouns.jsx";
 import Profile from "./components/Profile.jsx";
 import TabBarItem from "./components/TabBarItem.js";
+import UserContextItem from "./components/UserContextItem.jsx";
 import "./style.css"
 
 import { Settings } from "./components/Settings.jsx";
@@ -86,6 +87,11 @@ export async function start() {
       })
 
     });
+
+  // User context menu link
+  inject.utils.addMenuItem(types.ContextMenuTypes.UserContext, (data) => {
+    return UserContextItem(data.user.id)
+  })
 }
 
 export function stop() {
