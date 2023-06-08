@@ -1,5 +1,6 @@
 import { webpack } from "replugged";
 import { React, flux as Flux } from "replugged/common";
+import { Loader } from "replugged/components";
 import pplMoeStore from "../profileStore.js";
 import Messages from "../i18n.js";
 
@@ -30,10 +31,6 @@ Promise.all([
     logger.warn("Profile failed to get classes:", e)
     classes.loaded = -1
   })
-
-
-const LoadingAnimationModule = webpack.getModule(webpack.filters.byProps("WANDERING_CUBES"))
-const LoadingAnimation = Object.values(LoadingAnimationModule).find(e => typeof e === "function")
 
 
 function HeaderBlock(props) {
@@ -110,7 +107,7 @@ function Profile({ userId, profile }) {
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
 
   if(typeof profile === "undefined" || !classes.loaded) {
-    return (<LoadingAnimation className="ppl-moe-section-loading" />)
+    return (<Loader className="ppl-moe-section-loading" />)
 
   } else if(!profile || classes.loaded === -1) {
     return (<div className="ppl-moe-section-error" >

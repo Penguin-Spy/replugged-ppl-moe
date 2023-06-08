@@ -21,9 +21,9 @@
 span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns {
   margin-left: .25rem;
 }
-span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns::after {
+/*span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns::after {
   margin-right: 0;
-}
+}*/
 
 /* hide pronouns in reply previews (funny css because the JS doesn't have enough info to determine this) */
 div:is(
