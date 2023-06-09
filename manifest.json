@@ -7,10 +7,10 @@
     "discordID": "97399302313242624",
     "github": "Penguin-Spy"
   },
-  "version": "2.2.1",
+  "version": "2.2.2",
   "updater": {
-    "type": "github",
-    "id": "penguin-spy/replugged-ppl-moe"
+    "type": "store",
+    "id": "dev.penguinspy.ppl-moe"
   },
   "license": "MIT",
   "type": "replugged-plugin",
