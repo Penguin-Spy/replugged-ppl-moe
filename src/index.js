@@ -20,7 +20,7 @@ const settings = await SettingsManager.init(PLUGIN_ID, DefaultSettings)
 export async function start() {
 
   // pronouns in message header
-  webpack.waitForModule(webpack.filters.bySource(/.=.\.renderPopout,.=.\.decorations,/))
+  webpack.waitForModule(webpack.filters.bySource(/.=.\.renderPopout,.=.\.renderRemixTag,/))
     .then(MessageHeaderUsername => {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
