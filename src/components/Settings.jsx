@@ -1,5 +1,5 @@
 import { util, plugins } from "replugged";
-import { SelectItem } from "replugged/components";
+import { SwitchItem, SelectItem } from "replugged/components";
 import { DropdownSettings } from "../constants.js";
 import Messages from "../i18n.js";
 
@@ -8,6 +8,11 @@ export function Settings() {
 
   return (
     <div>
+      <SwitchItem
+        note={Messages.PPL_MOE_SETTINGS_SHOW_OWN_PRONOUNS_NOTE}
+        {...util.useSetting(settings, "show_own_pronouns")}>
+        {Messages.PPL_MOE_SETTINGS_SHOW_OWN_PRONOUNS_TITLE}
+      </SwitchItem>
       <SelectItem
         note={PronounDBenabled ? Messages.PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_ENABLED : Messages.PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_DISABLED}
         options={DropdownSettings.pronoundb_compat}

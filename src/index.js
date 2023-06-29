@@ -25,6 +25,7 @@ export async function start() {
       const functionKey = Object.entries(MessageHeaderUsername).find(e => typeof e[1] === "function")[0]
 
       inject.after(MessageHeaderUsername, functionKey, ([props], res) => {
+        if(props.message.author.bot) { return } // bots can never have pronouns (transphobic?), and trying to render them makes unnecessary API calls
         const pronounDBCompat = settings.get("pronoundb_compat")
         const headerItems = res.props.children
 

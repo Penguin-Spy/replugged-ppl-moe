@@ -1,10 +1,12 @@
-import { React, flux as Flux } from "replugged/common";
+import { React, flux as Flux, users } from "replugged/common";
 import pplMoeStore from "../profileStore.js";
 import "./Pronouns.css";
 
 function Pronouns({ userId, profile, compact, pronounDBCompat }) {
   // only fetch a profile when pronouns for a different user are rendered
   React.useEffect(() => void pplMoeStore.fetchProfile(userId), [userId])
+
+  if(!settings.get("show_own_pronouns") && userId === users.getCurrentUser().id) return null
 
   // profile not loaded or no pronouns set
   if(!profile || profile.info?.pronouns == "") return null

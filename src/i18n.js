@@ -21,7 +21,9 @@ const Messages = Object.freeze({
   "PPL_MOE_MONTH_12": "Dec.",
   "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_TITLE": "PronounDB compat",
   "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_ENABLED": "Which pronouns to show when a user has both a ppl.moe profile and a PronounDB account.",
-  "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_DISABLED": "Enable PronounDB for this setting to be relevant."
+  "PPL_MOE_SETTINGS_PRONOUNDB_COMPAT_NOTE_DISABLED": "Enable PronounDB for this setting to be relevant.",
+  "PPL_MOE_SETTINGS_SHOW_OWN_PRONOUNS_TITLE": "Show own pronouns",
+  "PPL_MOE_SETTINGS_SHOW_OWN_PRONOUNS_NOTE": "When off, your pronouns will not be shown on your screen. They will still be visible to other users"
 })
 
 export default Messages

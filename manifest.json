@@ -9,7 +9,7 @@
     "github": "Penguin-Spy"
   },
   "source": "https://github.com/Penguin-Spy/replugged-ppl-moe",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "updater": {
     "type": "store",
     "id": "dev.penguinspy.ppl-moe"

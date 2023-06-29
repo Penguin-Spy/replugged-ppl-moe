@@ -3,27 +3,23 @@
   font-weight: 500;
   cursor: default;
   pointer-events: none;
-  margin-left: .5rem;
+  margin-left: 0.25rem;
   height: 1.25rem;
   color: var(--text-muted);
   display: inline-block;
 }
-.ppl-moe-pronouns[data-compact="true"] { display: inline }
+.ppl-moe-pronouns[data-compact="true"] { display: inline; }
 .ppl-moe-pronouns[data-compact="false"]::after {
   content: "•";
   display: inherit;
   margin-left: 0.25rem;
-  margin-right: -0.25rem;
 }
 
-
-/* fix margin when there's a role icon (and not a system tag) */
-span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns {
-  margin-left: .25rem;
-}
-/*span[class*="hasRoleIcon-"]:not([class*="hasSystemTag-"]) > .ppl-moe-pronouns::after {
+/* fix extra margin after username */
+[class*="header-"]>[id^="message-username-"] {
   margin-right: 0;
-}*/
+}
+
 
 /* hide pronouns in reply previews (funny css because the JS doesn't have enough info to determine this) */
 div:is(

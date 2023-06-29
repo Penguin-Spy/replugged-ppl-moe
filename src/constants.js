@@ -1,5 +1,6 @@
 const DefaultSettings = Object.freeze({
   pronoundb_compat: "ppl-moe",
+  show_own_pronouns: true
 })
 
 const DropdownSettings = Object.freeze({
