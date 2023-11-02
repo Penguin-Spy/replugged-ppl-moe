@@ -1,7 +1,7 @@
 {
   "id": "dev.penguinspy.ppl-moe",
-  "name": "ppl.moe",
-  "description": "A Replugged plugin that displays a user's ppl.moe profile in the user modal, and the user's pronouns above messages.",
+  "name": "ppl.moe (depreciated)",
+  "description": "DEPRECIATED, please uninstall!! A Replugged plugin that displays a user's ppl.moe profile in the user modal, and the user's pronouns above messages.",
   "image": "https://cdn.discordapp.com/attachments/1056113751272718386/1056113751495028807/ppl_moe_plugin_example.PNG",
   "author": {
     "name": "Penguin_Spy",
@@ -9,7 +9,7 @@
     "github": "Penguin-Spy"
   },
   "source": "https://github.com/Penguin-Spy/replugged-ppl-moe",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "updater": {
     "type": "store",
     "id": "dev.penguinspy.ppl-moe"
