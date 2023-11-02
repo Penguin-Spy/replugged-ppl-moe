@@ -1,3 +1,8 @@
+> **Warning**  
+> This plugin is no longer in development as [ppl.moe](https://ppl.moe/) (the website) has shut down.  
+> To view the code of the last functional version of the plugin, see the [last-functional-version tag](https://github.com/Penguin-Spy/replugged-ppl-moe/tree/last-functional-version).  
+> The original README.md is as follows:
+
 # replugged ppl.moe
 ![downloads](https://img.shields.io/github/downloads/Penguin-Spy/replugged-ppl-moe/latest/total?color=ff69b4&logo=github) [![Install for Replugged](https://img.shields.io/badge/Replugged-Install-7289da?logo=discord&logoColor=fff)](https://replugged.dev/install?source=github&identifier=Penguin-Spy/replugged-ppl-moe)  
 This is a [Replugged](https://replugged.dev/) plugin that displays a user's [ppl.moe](https://ppl.moe/) profile as a new tab in the user's modal.  
